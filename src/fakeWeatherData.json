@@ -69,16 +69,8 @@
         },
         {
             "dt": 1487268000,
-            "main": {
-                "temp": 277.05,
-                "temp_min": 274.498,
-                "temp_max": 277.05,
-                "pressure": 970.44,
-                "sea_level": 1044.7,
-                "grnd_level": 970.44,
-                "humidity": 90,
-                "temp_kf": 2.56
-            },
+        
+            
             "weather": [
                 {
                     "id": 800,

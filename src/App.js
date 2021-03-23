@@ -1,9 +1,7 @@
 
 import React, { Component } from "react";
 import Search from "./components/Search";
-
-import SayHi, { SayHello } from "./components/WeatherItem";
-import fakeWeatherData from "./fakeWeatherData.json";
+import FakeWeather from "./data/FakeWeather.json";
 
 import "./App.css";
 
@@ -118,80 +116,53 @@ class Partlycloudy extends Component {
   }
 }
 
-
-class Noww extends Component {
+class All extends Component {
   render() {
+    var i = 4;
+    const data = FakeWeather.list[i].main;
+    const Cmin = parseInt((data.temp_min - 32) * 5 / 9);
+    const Cmax = parseInt((data.temp_max - 32) * 5 / 9);
+    let menuItems = [];
+    for (var j = i + 1; j <= i + 7; j++) {
+      var f;
+      if (FakeWeather.list[j].weather[0].main == 'Clouds') { f = <Cloudy /> }
+      else if (FakeWeather.list[j].weather[0].main == 'Rain') { f = <Rain /> }
+      else if (FakeWeather.list[j].weather[0].main == 'Clear') { f = <Clear /> }
+      menuItems.push(
+        <div className="later id">
+          <h4>{FakeWeather.list[j].dt_txt.substring(10, 16)}</h4>
+          {f}
+          <h4>{parseInt((FakeWeather.list[j].main.temp - 32) * 5 / 9)}°C</h4>
+        </div>
+      )
+    }
+
     return (
-      <div className="now">
-        <img src={mostlycloudy} alt="mostlycloudy icon" />
-        <p className="p0">overcast clouds</p>
-        <p className="p1"><span>Temperature</span> 10° to 11°C</p>
-        <p className="p2"><span>Humidity</span> 78% <span>Pressure</span> 1008.48</p>
-      </div>
-    );
-  }
-}
+      <div className="all">
 
-class Laterr extends Component {
-  render() {
-    return (
-      <div className="laters">
-        <div className="later id1">
-          <h4>03:00</h4>
-          <Mostlycloudy />
-          <h4>8°C</h4>
+        <div className="now">
+          <img src={mostlycloudy} alt="mostlycloudy icon" />
+          <p className="p0"> {FakeWeather.list[i].weather[0].description}</p>
+          <p className="p1"><span>Temperature </span>{Cmin + "°C to   " + Cmax}°C</p>
+          <p className="p2"><span>Humidity  </span>  {data.humidity}% <span>  Pressure  </span>  {data.pressure}</p>
         </div>
 
-        <div className="later id2">
-          <h4>06:00</h4>
-          <Mostlycloudy />
-          <h4>9°C</h4>
-        </div>
-
-        <div className="later id3">
-          <h4>09:00</h4>
-          <Clear />
-          <h4>14°C</h4>
-        </div>
-
-        <div className="later id4">
-          <h4>12:00</h4>
-          <Clear />
-          <h4>17°C</h4>
-        </div>
-
-        <div className="later id5">
-          <h4>15:00</h4>
-          <Clear />
-          <h4>18°C</h4>
-        </div>
-
-        <div className="later id6">
-          <h4>18:00</h4>
-          <Clear />
-          <h4>16°C</h4>
-        </div>
-
-        <div className="later id7">
-          <h4>21:00</h4>
-          <Mostlycloudy />
-          <h4>13°C</h4>
+        <div className="laters">
+          {menuItems}
         </div>
 
       </div>
     );
   }
 }
-
-
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     name: "Mostafa_Aymie"
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Mostafa_Aymie"
+    };
+  }
 
   handleInputChange = value => {
     this.setState({ name: value });
@@ -200,22 +171,13 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        {/*<SayHi />
-          <SayHello color="black" name={this.state.name} /> */}
-        <div className="app__header">
 
+        <div className="app__header">
           <Search handleInput={this.handleInputChange} />
         </div>
 
         <div className="app__main">
-          <div className="all">
-
-            <Noww />
-
-            <Laterr />
-
-          </div>
-
+          <All />
         </div>
 
       </div>
@@ -224,14 +186,3 @@ class App extends Component {
 }
 
 export default App;
-
-{/* <Fog />
-<Rain />
-<Snow />
-<Storm />
-<Clear />
-<Cloudy />
-<Unknown />
-<Drizzle />
-<Mostlycloudy />
-<Partlycloudy /> */}
