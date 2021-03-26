@@ -10,12 +10,8 @@ class All extends Component {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "Mostafa_Aymie"
-    };
-  }
+  
+  //     name: "Mostafa_Aymie"
 
   handleInputChange = value => {
     this.setState({ name: value });
